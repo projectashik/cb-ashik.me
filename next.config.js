@@ -1,4 +1,8 @@
+const { withContentlayer } = require("next-contentlayer");
 /** @type {import('next').NextConfig} */
-module.exports = {
+module.exports = withContentlayer()({
   reactStrictMode: true,
-}
+  images: {
+    domains: ["source.unsplash.com"],
+  },
+});
