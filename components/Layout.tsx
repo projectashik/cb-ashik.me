@@ -20,9 +20,12 @@ const Layout = (props: any) => {
         <meta content={meta.description} name="description" />
         <meta
           property="og:url"
-          content={`https://cb-ashik.me${router.asPath}`}
+          content={`https://cb-ashik-me.vercel.app${router.asPath}`}
         />
-        <link rel="canonical" href={`https://cb-ashik.me${router.asPath}`} />
+        <link
+          rel="canonical"
+          href={`https://cb-ashik-me.vercel.app${router.asPath}`}
+        />
         <meta property="og:type" content={meta.type} />
         <meta property="og:site_name" content="Ashik Chapagain" />
         <meta property="og:description" content={meta.description} />
