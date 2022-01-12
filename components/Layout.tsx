@@ -7,7 +7,7 @@ const Layout = (props: any) => {
   const meta = {
     title: "Ashik Chapagain – Developer, writer, creator.",
     description: `Full-stack developer.`,
-    image: "https://cb-ashik.me/static/images/banner.png",
+    image: "https://cb-ashik-me.vercel.app/static/images/banner.png",
     type: "website",
     ...customMeta,
   };
