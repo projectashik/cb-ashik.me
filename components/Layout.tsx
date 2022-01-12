@@ -9,6 +9,7 @@ const Layout = (props: any) => {
     description: `Full-stack developer.`,
     image: "https://cb-ashik-me.vercel.app/static/images/banner.png",
     type: "website",
+    tags: "website,webdesign,webdevelopment",
     ...customMeta,
   };
   const router = useRouter();
@@ -18,6 +19,7 @@ const Layout = (props: any) => {
         <title>{meta.title}</title>
         <meta name="robots" content="follow, index" />
         <meta content={meta.description} name="description" />
+        <meta name="keywords" content={meta.keywords} />
         <meta
           property="og:url"
           content={`https://cb-ashik-me.vercel.app${router.asPath}`}

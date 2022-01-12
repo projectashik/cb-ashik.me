@@ -19,6 +19,7 @@ export default function BlogLayout({
       image={`https://cb-ashik-me.vercel.app${post.image}`}
       date={new Date(post.publishedAt).toISOString()}
       type="article"
+      keywords={post.tags}
     >
       <Container>
         <article className="max-w-screen-md text-justify">
@@ -50,13 +51,13 @@ export default function BlogLayout({
             </div>
             <p>{post.readingTime.text}</p>
           </div>
-          <div className="flex mt-4 space-x-2">
+          {/* <div className="flex mt-4 space-x-2">
             <p>Tags:</p>
             <span className="bg-gray-300 rounded-xl px-2 font-medium">JS</span>
             <span className="bg-gray-300 rounded-xl px-2 font-medium">
               Portfolio
             </span>
-          </div>
+          </div> */}
           <div className="w-full mt-4 prose dark:prose-dark max-w-none">
             {children}
           </div>
