@@ -21,15 +21,27 @@ export default function BlogLayout({
       type="article"
     >
       <Container>
-        <article>
-          <h1>{post.title}</h1>
-          <div>
-            <div>
+        <article className="max-w-screen-md text-justify">
+          {post.image && (
+            <div className="mb-10">
+              <Image
+                src={post.image}
+                height={627}
+                width={1280}
+                alt="Ashik Chapagain"
+                className="rounded"
+              />
+            </div>
+          )}
+          <h1 className="text-4xl font-bold mb-5">{post.title}</h1>
+          <div className="flex items-center space-x-4 border-b pb-5">
+            <div className="flex items-center space-x-3">
               <Image
                 src="/images/profile.jpg"
-                height={24}
-                width={24}
+                height={50}
+                width={50}
                 alt="Ashik Chapagain"
+                className="rounded-full"
               />
               <p>
                 {"Ashik Chapagain / "}
@@ -37,6 +49,13 @@ export default function BlogLayout({
               </p>
             </div>
             <p>{post.readingTime.text}</p>
+          </div>
+          <div className="flex mt-4 space-x-2">
+            <p>Tags:</p>
+            <span className="bg-gray-300 rounded-xl px-2 font-medium">JS</span>
+            <span className="bg-gray-300 rounded-xl px-2 font-medium">
+              Portfolio
+            </span>
           </div>
           <div className="w-full mt-4 prose dark:prose-dark max-w-none">
             {children}
