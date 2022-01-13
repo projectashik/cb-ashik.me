@@ -7,7 +7,7 @@ const Layout = (props: any) => {
   const meta = {
     title: "Ashik Chapagain – Developer, writer, creator.",
     description: `Full-stack developer.`,
-    image: "https://cb-ashik-me.vercel.app/static/images/banner.png",
+    image: "https://cb-ashik.me/static/images/banner.png",
     type: "website",
     tags: "website,webdesign,webdevelopment",
     ...customMeta,
@@ -22,12 +22,9 @@ const Layout = (props: any) => {
         <meta name="keywords" content={meta.keywords} />
         <meta
           property="og:url"
-          content={`https://cb-ashik-me.vercel.app${router.asPath}`}
+          content={`https://cb-ashik.me${router.asPath}`}
         />
-        <link
-          rel="canonical"
-          href={`https://cb-ashik-me.vercel.app${router.asPath}`}
-        />
+        <link rel="canonical" href={`https://cb-ashik.me${router.asPath}`} />
         <meta property="og:type" content={meta.type} />
         <meta property="og:site_name" content="Ashik Chapagain" />
         <meta property="og:description" content={meta.description} />

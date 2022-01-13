@@ -16,7 +16,7 @@ export default function BlogLayout({
     <Layout
       title={`${post.title} - The Tech Hulk Blog`}
       description={post.summary}
-      image={`https://cb-ashik-me.vercel.app${post.image}`}
+      image={`https://cb-ashik.me${post.image}`}
       date={new Date(post.publishedAt).toISOString()}
       type="article"
       keywords={post.tags}
