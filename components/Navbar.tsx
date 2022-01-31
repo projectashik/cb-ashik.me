@@ -58,15 +58,14 @@ const Navbar = () => {
         </ul>
         <ul className="flex items-center space-x-8 lg:flex">
           <li>
-            <Link href="">
-              <a
-                className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-primary-500 hover:bg-primary-700 focus:shadow-outline focus:outline-none"
-                aria-label="Hire me"
-                title="Hire me"
-              >
-                Hire me
-              </a>
-            </Link>
+            <a
+              href="https://www.fiverr.com/users/ashik_chapagain"
+              className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-primary-500 hover:bg-primary-700 focus:shadow-outline focus:outline-none"
+              aria-label="Hire me"
+              title="Hire me"
+            >
+              Hire me
+            </a>
           </li>
         </ul>
         {/* Mobile menu */}

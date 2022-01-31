@@ -28,26 +28,29 @@ const Home: NextPage = () => {
                   web developer.
                 </p>
                 <div className=" justify-center md:justify-start flex items-center mt-4 space-x-3">
-                  <Button href="https://fiverr.com">Hire Me</Button>
-                  <Link href="/projects">
-                    <a className="underline flex items-center space-x-2 text-primary-500">
-                      <span>View my projects</span>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M17 8l4 4m0 0l-4 4m4-4H3"
-                        />
-                      </svg>
-                    </a>
-                  </Link>
+                  <Button href="https://www.fiverr.com/users/ashik_chapagain">
+                    Hire Me
+                  </Button>
+                  <a
+                    href="https://github.com/projectashik"
+                    className="underline flex items-center space-x-2 text-primary-500"
+                  >
+                    <span>View my github</span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                      />
+                    </svg>
+                  </a>
                 </div>
                 <div className="justify-center md:justify-start mt-4 flex space-x-3">
                   <a
