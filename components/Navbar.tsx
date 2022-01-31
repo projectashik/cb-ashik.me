@@ -33,7 +33,6 @@ const Navbar = () => {
     { label: "Projects", href: "/projects" },
     { label: "Blog", href: "/blog" },
     { label: "Snippets", href: "/snippets" },
-    { label: "About", href: "/about" },
   ];
 
   const [showMenu, setShowMenu] = useState(false);
@@ -51,14 +50,14 @@ const Navbar = () => {
             </span>
           </a>
         </Link>
-        <ul className="flex items-center hidden space-x-8 lg:flex">
+        <ul className=" items-center hidden space-x-8 lg:flex">
           {menus.map((menu, index) => (
             <NavItem href={menu.href} key={index}>
               {menu.label}
             </NavItem>
           ))}
         </ul>
-        <ul className="flex items-center hidden space-x-8 lg:flex">
+        <ul className="flex items-center space-x-8 lg:flex">
           <li>
             <Link href="">
               <a

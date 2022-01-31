@@ -2,7 +2,6 @@ import { allSnippets } from ".contentlayer/data";
 import { Snippet } from ".contentlayer/types";
 import Container from "components/Container";
 import Layout from "components/Layout";
-import SnippetCard from "components/SnippetCard";
 import { useState } from "react";
 import Link from "next/link";
 
