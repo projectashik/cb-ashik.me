@@ -30,7 +30,6 @@ const NavItem = ({
 
 const Navbar = () => {
   const menus = [
-    { label: "Projects", href: "/projects" },
     { label: "Blog", href: "/blog" },
     { label: "Snippets", href: "/snippets" },
   ];
