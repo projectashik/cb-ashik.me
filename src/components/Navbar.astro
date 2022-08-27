@@ -1,0 +1,22 @@
+---
+import Container from "./Container.astro";
+
+const { className = "" } = Astro.props;
+---
+
+<header class="bg-[#040d21]">
+    <Container className="h-20 flex justify-between items-center">
+        <a href="/">
+            <h1 class="font-semibold text-3xl text-white font-heading">
+                Ashik Chapagain
+            </h1>
+        </a>
+        <nav class="">
+            <ul class="flex">
+                <li>
+                    <a href="/" class="text-gray-200">GitHub</a>
+                </li>
+            </ul>
+        </nav>
+    </Container>
+</header>

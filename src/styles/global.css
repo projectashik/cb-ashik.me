@@ -1,0 +1,25 @@
+h1, h2, h3, h4, h5 {
+	position: relative;
+}
+h1 a, h2 a, h3 a, h4 a, h5 a {
+	position: absolute;
+	display: block;
+	height: 100%;
+	width: 100%;
+	color: inherit;
+}
+
+h1 a:before, h2 a:before, h3 a:before, h4 a:before, h5 a:before {
+	position: absolute;
+	right: 100%;
+	display: block;
+	content: '#';
+	margin-right: 0.2em;
+	visibility: hidden;
+	opacity: 0.5;
+}
+
+h1:hover a:before, h2:hover a:before, h3:hover a:before, h4:hover a:before, h5:hover a:before {
+    visibility: visible;
+    opacity: 1;
+}
