@@ -1,22 +1,27 @@
 ---
-import Container from "./Container.astro";
+import Container from "./Container.astro"
 
-const { className = "" } = Astro.props;
+const { className = "" } = Astro.props
 ---
 
 <header class="bg-[#040d21]">
-    <Container className="h-20 flex justify-between items-center">
-        <a href="/">
-            <h1 class="font-semibold text-3xl text-white font-heading">
-                Ashik Chapagain
-            </h1>
-        </a>
-        <nav class="">
-            <ul class="flex">
-                <li>
-                    <a href="https://github.com/projectashik" class="text-gray-200">GitHub</a>
-                </li>
-            </ul>
-        </nav>
-    </Container>
+  <Container className="h-20 flex justify-between items-center">
+    <a href="/">
+      <h1 class="font-semibold text-3xl text-white font-heading">
+        Ashik Chapagain
+      </h1>
+    </a>
+    <nav class="">
+      <ul class="flex space-x-2">
+        <li>
+          <a href="/blogs" class="text-gray-200">Blogs</a>
+        </li>
+        <li>
+          <a href="https://github.com/projectashik" class="text-gray-200"
+            >GitHub
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </Container>
 </header>

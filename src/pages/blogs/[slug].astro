@@ -25,11 +25,7 @@ const { Content, frontmatter, url } = Astro.props.blog
   image={frontmatter.image}
   keywords={frontmatter.tags}
 >
-  <div class="mt-10">
-    <h1 class="mb-2 font-black text-3xl">{frontmatter.name}</h1>
-    <p class="text-gray-600">{frontmatter.description}</p>
-  </div>
-  <div class="border-8 mt-3 border-[#040d21]">
+  <div class="border-8 mt-10 border-[#040d21]">
     <Image
       src={frontmatter.image}
       width={1200}
@@ -38,12 +34,55 @@ const { Content, frontmatter, url } = Astro.props.blog
       aspectRatio="16:9"
     />
   </div>
-  <div class="prose prose-base py-8 col-span-3">
+  <div class="mt-3 prose prose-base text-center  max-w-full">
+    <h1 class="mb-2 font-black text-3xl">{frontmatter.title}</h1>
+    <p class="text-gray-600">{frontmatter.description}</p>
+
+    <div class="mt-1">
+      <p>Published At: <strong>{frontmatter.date}</strong></p>
+      <p>Reading Time: <strong>{frontmatter.minutesRead}</strong></p>
+    </div>
+  </div>
+  <div class="border rounded-md p-4">
+    <div class="flex items-center">
+      <Image
+        src={frontmatter.author.image}
+        class="rounded-full"
+        width={80}
+        height={80}
+        format="webp"
+      />
+      <div class="flex flex-col ml-2 -gap-2">
+        <h3 class="mb-1 font-black">{frontmatter.author.name}</h3>
+        <a
+          target="_blank"
+          href={`https://twitter.com/${frontmatter.author.twitter}`}
+          class="text-blue-500 underline"
+          >@{frontmatter.author.twitter}
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="prose prose-base py-8">
     <Content />
 
-    <a href={`https://github.com/projectashik/cb-ashik.me/tree/main/${url}`}
+    <a
+      target="_blank"
+      href={`https://github.com/projectashik/cb-ashik.me/tree/main/${url}`}
       >Suggest an edit
     </a>
+
+    <div class="my-2 flex flex-wrap gap-2">
+      {
+        frontmatter.tags.map((tag: string) => {
+          return (
+            <a href={`/tags/${tag}`} class="bg-gray-200 p-2">
+              #{tag}
+            </a>
+          )
+        })
+      }
+    </div>
 
     <script
       src="https://giscus.app/client.js"

@@ -1,8 +1,16 @@
 ---
 import { Image } from "@astrojs/image/components"
+import Card from "../components/Card.astro"
 import Container from "../components/Container.astro"
 import Navbar from "../components/Navbar.astro"
 const projects = await Astro.glob("../data/projects/*.mdx")
+const blogs = (await Astro.glob("../data/blogs/*.mdx"))
+  .slice(0, 3)
+  .sort(
+    (a, b) =>
+      new Date(b.frontmatter.date).valueOf() -
+      new Date(a.frontmatter.date).valueOf()
+  )
 ---
 
 <html lang="en" class="scroll-smooth">
@@ -44,7 +52,7 @@ const projects = await Astro.glob("../data/projects/*.mdx")
             <p
               class="text-5xl md:text-7xl lg:text-6xl tracking-wide max-w-xl text-white font-black"
             >
-              Fullstack Web Developer
+              Full-stack Web Developer
             </p>
           </h1>
           <div
@@ -122,7 +130,7 @@ const projects = await Astro.glob("../data/projects/*.mdx")
         </a>
       </div>
     </section>
-    <main id="main" class="flex flex-col justify-center py-10 bg-[#040d21]">
+    <section id="main" class="flex flex-col justify-center py-10 bg-[#040d21]">
       <div class="text-center">
         <h2
           class="relative before:absolute before:-top-2 before:-left-2 before:w-5 before:h-5 before:bg-red-500 after:absolute after:-bottom-2 after:-right-2 after:w-5 after:h-5 after:bg-indigo-500 hover:drop-shadow-2xl border p-4 text-2xl inline-block font-bold text-white"
@@ -134,35 +142,29 @@ const projects = await Astro.glob("../data/projects/*.mdx")
         <div class="grid grid-cols-2 md:grid-cols-4 mt-8 gap-3">
           {
             projects.map((project) => {
-              return (
-                <article class="text-gray-50 flex flex-col border p-3 rounded">
-                  <Image
-                    src={project.frontmatter.image}
-                    width={1200}
-                    class="mb-2"
-                    format="webp"
-                    height={630}
-                    aspectRatio="16:9"
-                  />
-                  <h1 class="text-lg mb-1 font-bold">
-                    {project.frontmatter.name}
-                  </h1>
-
-                  <p>{project.frontmatter.description}</p>
-                  <div class="justify-self-end">
-                    <a
-                      class="bg-gray-900 p-2 inline-block mt-2"
-                      href={`/projects/${project.frontmatter.slug}`}
-                    >
-                      Read more
-                    </a>
-                  </div>
-                </article>
-              )
+              return <Card project={project} />
             })
           }
         </div>
       </Container>
-    </main>
+    </section>
+    <section id="blogs" class="flex flex-col justify-center py-10 bg-[#050c1b]">
+      <div class="text-center">
+        <h2
+          class="relative before:absolute before:-top-2 before:-left-2 before:w-5 before:h-5 before:bg-red-500 after:absolute after:-bottom-2 after:-right-2 after:w-5 after:h-5 after:bg-indigo-500 hover:drop-shadow-2xl border p-4 text-2xl inline-block font-bold text-white"
+        >
+          Latest Articles
+        </h2>
+      </div>
+      <Container>
+        <div class="grid grid-cols-2 md:grid-cols-3 mt-8 gap-3">
+          {
+            blogs.map((blog) => {
+              return <Card blog={blog} />
+            })
+          }
+        </div>
+      </Container>
+    </section>
   </body>
 </html>

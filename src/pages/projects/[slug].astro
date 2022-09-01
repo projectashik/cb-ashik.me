@@ -20,13 +20,13 @@ const { Content, frontmatter } = Astro.props.project
 ---
 
 <PublicationLayout
-  title={frontmatter.name}
+  title={frontmatter.title}
   description={frontmatter.description}
   image={frontmatter.image}
 >
-  <div class="mt-10">
-    <h1 class="mb-2 font-black text-3xl">{frontmatter.name}</h1>
-    <p class="text-gray-600">{frontmatter.description}</p>
+  <div class="mt-10 prose prose-base text-center max-w-full">
+    <h1 class="mb-2 font-black text-3xl">{frontmatter.title}</h1>
+    <p class="">{frontmatter.description}</p>
   </div>
   <div class="border-8 mt-3 border-[#040d21]">
     <Image

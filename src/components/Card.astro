@@ -1,0 +1,37 @@
+---
+import { Image } from "@astrojs/image/components"
+
+const { blog, project, black } = Astro.props
+
+const item = blog || project
+---
+
+<article
+  class={`text-gray-50 flex flex-col border p-3 rounded ${
+    black ? "text-gray-800" : "text-gray-50"
+  }`}
+>
+  <Image
+    src={item.frontmatter.image}
+    width={1200}
+    class="mb-2"
+    format="webp"
+    height={630}
+    aspectRatio="16:9"
+  />
+  <h1 class="text-lg mb-1 font-bold">
+    {item.frontmatter.title}
+  </h1>
+
+  <p>{item.frontmatter.description}</p>
+  <div class="justify-self-end">
+    <a
+      class="bg-gray-900 text-gray-50 p-2 inline-block mt-2"
+      href={blog
+        ? `/blogs/${blog.frontmatter.slug}`
+        : `/projects/${project.frontmatter.slug}`}
+    >
+      Read more
+    </a>
+  </div>
+</article>
