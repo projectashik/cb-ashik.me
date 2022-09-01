@@ -1,0 +1,116 @@
+---
+import PublicationLayout from "../../layouts/PublicationLayout.astro"
+import { Image } from "@astrojs/image/components"
+import Icon from "../../components/Icon"
+
+export async function getStaticPaths() {
+  const projects = await Astro.glob("../../data/projects/*.mdx")
+
+  return projects.map((project) => ({
+    params: {
+      slug: project.frontmatter.slug,
+    },
+    props: {
+      project,
+    },
+  }))
+}
+
+const { Content, frontmatter } = Astro.props.project
+---
+
+<PublicationLayout
+  title={frontmatter.name}
+  description={frontmatter.description}
+  image={frontmatter.image}
+>
+  <div class="mt-10">
+    <h1 class="mb-2 font-black text-3xl">{frontmatter.name}</h1>
+    <p class="text-gray-600">{frontmatter.description}</p>
+  </div>
+  <div class="border-8 mt-3 border-[#040d21]">
+    <Image
+      src={frontmatter.image}
+      width={1200}
+      format="webp"
+      height={630}
+      aspectRatio="16:9"
+    />
+  </div>
+  <div class="space-x-4 mt-4">
+    {
+      frontmatter.links.map((link: any) => (
+        <a
+          href={link.url}
+          class={`px-4 py-2 space-x-2 inline-flex bg-white border-2 rounded hover:bg-gray-200 text-gray-700`}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+            />
+          </svg>
+          <span>{link.text}</span>
+        </a>
+      ))
+    }
+  </div>
+  <div class="prose prose-base py-8 col-span-3">
+    <div>
+      <h2 id="technologies" class="mt-8">
+        <a aria-hidden="true" tabindex="-1" href="#technologies"
+          ><span class="icon icon-link"></span>
+        </a>Technologies
+      </h2>
+      <div class="mt-8 flex flex-wrap gap-4">
+        {
+          frontmatter.technologies.map((technology: any) => (
+            <span class="flex space-x-1 items-center">
+              <Icon name={technology} />
+              <span class="text-gray-700 capitalize">{technology}</span>
+            </span>
+          ))
+        }
+      </div>
+    </div>
+    <Content />
+    <div class="mt-8">
+      <h2 id="developers">
+        <a aria-hidden="true" tabindex="-1" href="#developers"
+          ><span class="icon icon-link"></span>
+        </a>Developers
+      </h2>
+      <div class="grid md:grid-cols-2 gap-3 grid-cols-1">
+        {
+          frontmatter.developers.map((creator: any) => (
+            <div class="flex border space-x-4 px-4 items-center">
+              <div class="flex-shrink-0">
+                <Image
+                  class="rounded-full"
+                  src={creator.image}
+                  width={100}
+                  format="webp"
+                  height={100}
+                  aspectRatio="1:1"
+                />
+              </div>
+              <div class="flex-1">
+                <h3 class="font-black text-xl">{creator.name}</h3>
+                <p class="text-gray-600">@{creator.twitter}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</PublicationLayout>

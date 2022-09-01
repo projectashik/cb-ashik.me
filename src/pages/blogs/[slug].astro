@@ -1,0 +1,65 @@
+---
+import PublicationLayout from "../../layouts/PublicationLayout.astro"
+import { Image } from "@astrojs/image/components"
+import Icon from "../../components/Icon"
+
+export async function getStaticPaths() {
+  const blog = await Astro.glob("../../data/blogs/*.mdx")
+
+  return blog.map((blog) => ({
+    params: {
+      slug: blog.frontmatter.slug,
+    },
+    props: {
+      blog,
+    },
+  }))
+}
+
+const { Content, frontmatter, url } = Astro.props.blog
+---
+
+<PublicationLayout
+  title={frontmatter.title}
+  description={frontmatter.description}
+  image={frontmatter.image}
+  keywords={frontmatter.tags}
+>
+  <div class="mt-10">
+    <h1 class="mb-2 font-black text-3xl">{frontmatter.name}</h1>
+    <p class="text-gray-600">{frontmatter.description}</p>
+  </div>
+  <div class="border-8 mt-3 border-[#040d21]">
+    <Image
+      src={frontmatter.image}
+      width={1200}
+      format="webp"
+      height={630}
+      aspectRatio="16:9"
+    />
+  </div>
+  <div class="prose prose-base py-8 col-span-3">
+    <Content />
+
+    <a href={`https://github.com/projectashik/cb-ashik.me/tree/main/${url}`}
+      >Suggest an edit
+    </a>
+
+    <script
+      src="https://giscus.app/client.js"
+      data-repo="projectashik/cb-ashik.me"
+      data-repo-id="R_kgDOGqhjUA"
+      data-category="Q&A"
+      data-category-id="DIC_kwDOGqhjUM4CRKta"
+      data-mapping="title"
+      data-strict="0"
+      data-reactions-enabled="1"
+      data-emit-metadata="0"
+      data-input-position="bottom"
+      data-theme="preferred_color_scheme"
+      data-lang="en"
+      crossorigin="anonymous"
+      async
+    ></script>
+  </div>
+</PublicationLayout>

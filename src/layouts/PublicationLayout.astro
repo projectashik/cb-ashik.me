@@ -1,0 +1,51 @@
+---
+import Container from "../components/Container.astro"
+import Navbar from "../components/Navbar.astro"
+import { Image } from "@astrojs/image/components"
+import Icon from "../components/Icon"
+
+import "../styles/global.css"
+
+// 1. The frontmatter prop gives access to frontmatter and other data
+const { title, description, image, keywords } = Astro.props
+---
+
+<html>
+  <head>
+    <!-- Add other Head elements here, like styles and meta tags. -->
+    <title>{title}</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@ChapagainAshik" />
+    <meta name="twitter:title" content={title} />
+    <!-- meta keywords -->
+    {keywords && <meta name="keywords" content={keywords.join(",")} />}
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Rubik:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css"
+    />
+  </head>
+  <body>
+    <Navbar />
+    <!-- Add other UI components here, like common headers and footers. -->
+    <Container>
+      <article>
+        <slot />
+      </article>
+    </Container>
+  </body>
+</html>
