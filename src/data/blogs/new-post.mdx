@@ -1,0 +1,258 @@
+---
+title: Next.js with MongoDB - The Complete Guide
+slug: new-post
+description: "In this article, we'll learn how to connect MongoDB database with Next.js. And also learn how to perform CRUD(Create, Read, Update, Delete) operations in MongoDB."
+tags: [database, nosql, api, nextjs, mongodb]
+categories: [nextjs, mongodb]
+author:
+  {
+    name: "Ashik Chapagain",
+    twitter: "ChapagainAshik",
+    image: "https://avatars.githubusercontent.com/u/47524279?v=4",
+  }
+date: "2022-01-01"
+image: "https://cdn.hashnode.com/res/hashnode/image/upload/v1640007875767/ZCgZVJh91.png"
+---
+
+`Hello, world`
+
+Let's learn **How to integrate Next.js with MongoDB?**.
+
+## Introduction
+
+In this article, we'll learn how to connect MongoDB database with Next.js. And also learn how to perform **CRUD(Create, Read, Update, Delete)** operations in MongoDB.
+
+Before starting, I am assuming that you know the basics of No-SQL database like what collections and documents are?
+
+## Let's Build
+
+### Creating Application
+
+Run the following command to create a new Next.js Application.
+
+```bash
+# yarn
+yarn create next-app mongo-example
+
+# npx
+npx create-next-app mongo-example
+
+#pnpm
+pnpm create next-app mongo-example
+```
+
+### Create mongoDB database
+
+You can download mongoDB community server in your local machine and use it. But for the ease, I will be using mongoDB Atlas.
+
+1. Go to [mongodb.com](https://mongodb.com) and register for a account and you will be asked some of the questions give the answers to them.
+2. Click on `Create ` on free one to get a free mongo db database.
+   ![1.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1640009809266/TZfYLi0tU2.png)
+3. Now again click on `Create cluster`.
+   ![2.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1640009821226/-14SLdYwu.png)
+4. Now, create a new user by filling the username and password filled. You will require this credentials while connecting to database.
+   ![3.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1640009892528/-l7oGfFAr.png)
+5. Now, whitelist your IP to connect to this db instance, by clicking on `Add my current IP Address`.
+   ![4.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1640009975527/scYgtLqPx.png)
+6. Then click on `Finish and close` and again click on `Go to databases`.
+7. Now, wait until your free cluster is created, once it is created click on `connect`.
+   ![8.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1640010158763/2doN1GqID.png)
+8. Now, click on second option.
+   ![9.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1640010195758/cfMX3adcx.png)
+9. Now, copy the connection URI.
+   ![10.png](https://cdn.hashnode.com/res/hashnode/image/upload/v1640010217890/5TRGulJ48.png)
+
+### Connecting Next.js app to mongoDB database
+
+- Create a new file in the root of the project named `.env.local` and add the following.
+
+```env
+MONGODB="<YOUR_CONNECTION_STRING>"
+```
+
+> Note: In the connection URI you should replace `<password>` with the actual password.
+
+- Now, install the required package.
+
+```bash
+#yarn
+yarn add mongodb
+
+#npm
+npm install mongodb
+
+#pnpm
+pnpm add mongodb
+```
+
+- Create a new file name `mongodb.js` in `libs` directory. And add the following content.
+
+```js
+// libs/mongodb.js
+
+import { MongoClient } from "mongodb"
+
+const MONGODB_URI = process.env.MONGODB_URI
+
+// check the MongoDB URI
+if (!MONGODB_URI) {
+  throw new Error("Define the MONGODB_URI environmental variable")
+}
+
+let cachedClient = null
+let cachedDb = null
+
+export async function connectToDatabase() {
+  // check the cached.
+  if (cachedClient && cachedDb) {
+    // load from cache
+    return {
+      client: cachedClient,
+      db: cachedDb,
+    }
+  }
+
+  // Connect to cluster
+  let client = new MongoClient(MONGODB_URI)
+  await client.connect()
+  let db = client.db()
+
+  // set cache
+  cachedClient = client
+  cachedDb = db
+
+  return {
+    client: cachedClient,
+    db: cachedDb,
+  }
+}
+```
+
+## Let's Build Todo Application
+
+### Create API Routes for CRUD Operation
+
+- #### Create Todo
+
+Create a file name `add-todo.js` inside `pages/api` folder.
+
+And add the following content.
+
+```js
+import { connectToDatabase } from "../../libs/mongodb"
+
+export default async function handler(req, res) {
+  const { db } = await connectToDatabase()
+  // Take user input
+  const { title } = req.body
+  // Insert a document into the collection
+  const response = db.collection("todos").insertOne({
+    title,
+    completed: false,
+    createdAt: new Date(),
+  })
+  // Send a response
+  res.status(200).json({
+    data: await db.collection("todos").findOne({ id: response.insertedId }),
+    message: "Todo added successfully",
+  })
+}
+```
+
+- #### Read Todos
+  File name: `pages/api/read-todos.js`
+
+```js
+import { connectToDatabase } from "../../libs/mongodb"
+
+export default async function handler(req, res) {
+  const { db } = await connectToDatabase()
+  // Send all the todos
+  const todos = await db.collection("todos").find({}).toArray()
+  res.status(200).json(todos)
+}
+```
+
+- #### Update Todo
+  File name: `pages/api/update-todo.js`
+
+```js
+import { ObjectId } from "mongodb"
+import { connectToDatabase } from "../../libs/mongodb"
+
+export default async function handler(req, res) {
+  const { db } = await connectToDatabase()
+  // Update Todo Data
+  const { title, completed, id } = req.body
+  // Update the todo with the given id
+  await db.collection("todos").updateOne(
+    { _id: ObjectId(id) },
+    {
+      $set: {
+        title,
+        completed,
+      },
+    }
+  )
+  // Send a response
+  res.status(200).json({
+    data: await db.collection("todos").findOne({ _id: ObjectId(id) }),
+    message: "Todo updated successfully",
+  })
+}
+```
+
+- #### Delete Todo
+  File name: `pages/api/delete-todo.js`
+
+```js
+import { ObjectId } from "mongodb"
+import { connectToDatabase } from "../../libs/mongodb"
+
+export default async function handler(req, res) {
+  const { db } = await connectToDatabase()
+  // Delete Todo ID
+  const { id } = req.body
+  // Delete the todo with the given id
+  const response = await db.collection("todos").deleteOne({ _id: ObjectId(id) })
+  // Send a response
+  res.status(200).json({
+    data: await db.collection("todos").findOne({ _id: ObjectId(id) }),
+    message: "Todo deleted successfully",
+  })
+}
+```
+
+### Testing
+
+First run the dev server using the one of the following command.
+
+```
+yarn run dev
+npm run dev
+pnpm run dev
+```
+
+Now, You can install any of the REST API client and test them, for now I'll be using [VS code extension Thunder Client](https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client).
+
+- #### Create Todo
+
+![Create Todo Demo](https://cdn.hashnode.com/res/hashnode/image/upload/v1640012937490/9FI8mjYhd8.png)
+
+- #### Read Todos
+
+![Read Todos Demo](https://cdn.hashnode.com/res/hashnode/image/upload/v1640013026604/ylZI7w42S.png)
+
+- #### Update Todo
+
+![Update Todo Demo](https://cdn.hashnode.com/res/hashnode/image/upload/v1640013414700/Xcaykc_nM.png)
+
+- #### Delete Todo
+
+![Delete Todo Demo](https://cdn.hashnode.com/res/hashnode/image/upload/v1640013514367/WouHAXZrNX.png)
+
+## Useful Links
+
+- [Github Repo](https://github.com/projectashik/nextjs-mongodb)
+
+So, this much for today guys, if you have got any issue, feel free to ask and thank you for reading.
